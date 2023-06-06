@@ -59,7 +59,7 @@ def to_hex(string: str) -> str:
 def byte_obj(string: str) -> dict:
     """
     If the string is greater than the max length then it will return a list of
-    byte objects else it will just be the bytes object.
+    byte objects else it will just be the byte object.
 
     >>> byte_obj("")
     {'bytes': ''}
@@ -97,9 +97,9 @@ def byte_obj(string: str) -> dict:
 
 def key_obj(string: str) -> dict:
     """
-    Creates a proper key value object. Similar to the value but it can not
+    Creates a proper key value object. Similar to the byte obj but it can not
     exceed the max length in hex form. So instead of auto creating a list
-    it just trims the string to length.
+    it just trims the string to the max length.
 
     >>> key_obj("")
     {'bytes': ''}
@@ -130,6 +130,7 @@ def key_obj(string: str) -> dict:
 def dict_obj(data: dict, key: str) -> dict:
     """
     This creates the dictionary object.
+    
     >>> dict_obj({}, '')
     {'map': []}
     >>> dict_obj({'':{}}, '')
@@ -289,13 +290,13 @@ def write_metadatum_file(file_path: str, data: dict) -> None:
     ...
     OSError: Error Writing File
 
-    >>> write_metadatum_file("data/example.json", {"key": set()})
+    >>> write_metadatum_file("test_data/example.json", {"key": set()})
     Traceback (most recent call last):
         ...
     TypeError: Error serializing data type
     
-    >>> write_metadatum_file("data/example.json", {"key": "value"})
-    >>> data = read_metadata_file("data/example.json")
+    >>> write_metadatum_file("test_data/example.json", {"key": "value"})
+    >>> data = read_metadata_file("test_data/example.json")
     >>> data == {"key": "value"}
     True
     >>> write_metadatum_file(14, {'': ''})
@@ -323,7 +324,7 @@ def write_metadatum_file(file_path: str, data: dict) -> None:
 
 def get_metadata_headers(file_path: str) -> Tuple[str, str, str]:
     """
-    >>> file_path = "data/empty.metadata.json"
+    >>> file_path = "test_data/empty.metadata.json"
     >>> tag, pid, tkn = get_metadata_headers(file_path)
     >>> tag == "721"
     True
@@ -362,7 +363,7 @@ def create_metadatum(file_path: str, tag: str, pid: str, tkn: str, version: int)
     """
     Attempt to create a metadatum from a standard 721 metadata file.
 
-    >>> file_path = "data/empty.metadata.json"
+    >>> file_path = "test_data/empty.metadata.json"
     >>> tag = '721'
     >>> pid = 'policy_id'
     >>> tkn = 'token_name'
@@ -370,7 +371,7 @@ def create_metadatum(file_path: str, tag: str, pid: str, tkn: str, version: int)
     >>> create_metadatum(file_path, tag, pid, tkn, version)
     {'constructor': 0, 'fields': [{'map': []}, {'int': 1}]}
 
-    >>> file_path = "data/readme.metadata.json"
+    >>> file_path = "test_data/readme.metadata.json"
     >>> create_metadatum(file_path, tag, pid, tkn, version)
     {'constructor': 0, 'fields': [{'map': [{'k': {'bytes': '616c62756d5f7469746c65'}, 'v': {'bytes': '4120536f6e67'}}, {'k': {'bytes': '61727469737473'}, 'v': {'list': [{'map': [{'k': {'bytes': '6e616d65'}, 'v': {'bytes': '596f75'}}]}]}}, {'k': {'bytes': '636f70797269676874'}, 'v': {'list': [{'bytes': 'c2a920323032322046616b65204c4c43'}]}}, {'k': {'bytes': '636f756e7472795f6f665f6f726967696e'}, 'v': {'bytes': '556e6974656420537461746573'}}, {'k': {'bytes': '747261636b5f6e756d626572'}, 'v': {'int': 1}}]}, {'int': 1}]}
     >>> create_metadatum(14, tag, pid, tkn, version)
@@ -443,8 +444,8 @@ def convert_metadata(file_path: str, datum_path: str, tag: str, pid: str, tkn: s
     Convert the metadata file into the correct metadatum format. This would
     probably be the function to call.
 
-    >>> file_path = "data/test.metadata.json"
-    >>> datum_path = "data/test.metadatum.json"
+    >>> file_path = "test_data/test.metadata.json"
+    >>> datum_path = "test_data/test.metadatum.json"
     >>> tag = '721'
     >>> pid = 'policy_id'
     >>> tkn = 'token_name'
