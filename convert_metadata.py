@@ -254,7 +254,7 @@ def read_metadata_file(file_path: str) -> dict:
     ...     read_metadata_file('empty_file.json')
     Traceback (most recent call last):
     ...
-    ValueError: Invalid JSON content in the file.
+    ValueError: Invalid JSON Content In The File
     >>> read_metadata_file(14)
     Traceback (most recent call last):
     ...
@@ -271,13 +271,13 @@ def read_metadata_file(file_path: str) -> dict:
             data = json.load(f)
         return data
 
-    # Handle the case when the file does not exist
+    # handle the case when the file does not exist
     except FileNotFoundError:
-        raise
+        raise FileNotFoundError("File Does Not Exist")
 
-    # Handle the case when the file contains invalid JSON content
+    # handle the case when the file contains invalid JSON content
     except json.JSONDecodeError:
-        raise ValueError("Invalid JSON content in the file.")
+        raise ValueError("Invalid JSON Content In The File")
 
 
 def write_metadatum_file(file_path: str, data: dict) -> None:
@@ -343,7 +343,7 @@ def get_metadata_headers(file_path: str) -> Tuple[str, str, str]:
     
     data = read_metadata_file(file_path)
     
-    # TODO multitag
+    # TODO multitag or multitoken
     
     # single tag metadata
     tag = next(iter(data.keys())) if len(data) == 1 else None
