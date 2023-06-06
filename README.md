@@ -7,7 +7,7 @@ The Python script called `convert_metadata.py` has the capability to convert sta
 The simpliest way to convert metadata is with the `convert.sh` bash script. This assumes 721 and standard formatting.
 
 ```bash
-./convert path/to/metadata/file.json
+./convert.sh path/to/metadata/file.json
 ```
 
 This will assume a single token metadata inside the metadata file and will auto populate a `metadatum.json` file inside the directory.

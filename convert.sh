@@ -14,8 +14,6 @@ if [[ ! -f $file_path ]]; then
     echo -e "\033[0;31m\nNot A Valid File Path\033[0m";
 fi
 
-python3 -c "from convert_metadata import get_metadata_headers; get_metadata_headers('${file_path}')"
-
 # Execute the Python one-liner and capture the output
 output=$(python3 -c "from convert_metadata import get_metadata_headers; print(get_metadata_headers('${file_path}'))")
 
@@ -29,6 +27,7 @@ IFS=',' read -r var1 var2 var3 <<< "$output"
 tag=$(echo $var1 | xargs)
 pid=$(echo $var2 | xargs)
 tkn=$(echo $var3 | xargs)
-ver=$(jq -r --arg tag "$tag" --arg pid "$pid" '.[$tag] | .version' ${file_path})
+ver=$(jq -r --arg tag "$tag" '.[$tag] | .version' ${file_path})
 
+# create the metadatum in the metadatum.json file
 python3 -c "from convert_metadata import convert_metadata; convert_metadata('${file_path}', 'metadatum.json', '${tag}', '${pid}', '${tkn}', ${ver})"
